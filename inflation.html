@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Inflation Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery-3.5.1.slim.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+</head>
+<style>
+  .top50 {
+    margin-top: 50px;
+  }
+
+  .center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+
+  /* Styles to hide 000webhost logo from website */
+  img[alt*="000webhost"],
+  img[alt*="000webhost"][style],
+  img[src*="000webhost"],
+  img[src*="000webhost"][style] {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0px !important;
+    height: 0px !important;
+    visibility: hidden !important;
+    display: none !important;
+  }
+
+  .medium-font {
+    font-family: 'IBM Plex Serif', serif;
+  }
+
+  body {
+    background-color: lavender;
+  }
+
+  .uv-result {
+      background-color: darkgray;
+      min-height: 100px;
+    }
+</style>
+
+<body>
+  <div class="container top50 medium-font">
+
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+
+        <form>
+          <div class="form-group row">
+
+            <label for="currentAmount" class="col-sm-4 col-form-label">Current Amount</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" id="currentAmount" value="1000000"
+                onBlur="calculateInflation()" />
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+            <label for="noOfYears" class="col-sm-4 col-form-label">No. of Years</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" id="noOfYears" value="15" onBlur="calculateInflation()" />
+            </div>
+
+          </div>
+
+          <div class="form-group row">
+            <label for="inflationRate" class="col-sm-4 col-form-label">Inflation Rate</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" id="inflationRate" value="7" onBlur="calculateInflation()" />
+            </div>
+
+
+          </div>
+          <br /><br />
+          <div class="form-group row">
+            <!-- <div class="well" id="result">Result</div> -->
+
+            <div class="col-md-12 uv-result jumbotron d-flex align-items-center justify-content-center">
+              <span id="result">0</span>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+
+
+  <script>
+    calculateInflation()
+
+    function calculateInflation() {
+      var amount = parseInt(document.getElementById('currentAmount').value),
+        inflationRate = parseInt(document.getElementById('inflationRate').value),
+        noOfYears = parseInt(document.getElementById('noOfYears').value);
+
+      var result = parseInt(amount * Math.pow((1 + inflationRate / 100), noOfYears));
+      document.getElementById('result').innerHTML = result.toLocaleString('en-IN');
+    }
+  </script>
+</body>

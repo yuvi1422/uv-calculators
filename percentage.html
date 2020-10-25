@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>UV Percentage Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery-3.5.1.slim.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+
+  <style>
+    .medium-font {
+      font-family: 'IBM Plex Serif', serif;
+    }
+    body {
+      background-color: lavender;
+    }
+    .uv-result {
+      background-color: darkgray;
+      min-height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container medium-font">
+    <div class="row">
+
+      <!-- Percentage Calculator 1 -->
+      <div class="col-md-4">
+        <form class="form-horizontal" action="javascript:void(0);">
+          <h2>Simple Percentage</h2>
+          <br /><br />
+          <div class="form-group">
+            <label for="percentage1_1">What is percent</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="percentage1_1"
+                   placeholder="Percentage"
+                   onchange="calculateSimplePercentage()">
+            <br /><br />
+            <label for="value1_2">of</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="value1_2"
+                   placeholder="Value"
+                   onchange="calculateSimplePercentage()">
+          </div>
+          <br /><br />
+          <div class="uv-result jumbotron d-flex align-items-center justify-content-center">
+            <span id="result1">0</span>
+          </div>
+        </form>
+      </div>
+
+
+      <!-- Percentage Calculator 2 -->
+      <div class="col-md-4">
+        <form class="form-horizontal" action="javascript:void(0);">
+          <h2>Reverse Percentage</h2>
+          <br /><br />
+          <div class="form-group">
+            <label for="value2_1">&nbsp;</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="value2_1"
+                   placeholder="Value"
+                   onchange="calculateReversePercentage()">
+
+            <br /><br />
+            <label for="value2_2">is what percent of</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="value2_2"
+                   placeholder="Value"
+                   onchange="calculateReversePercentage()">
+          </div>
+          <br /><br />
+          <div class="uv-result jumbotron d-flex align-items-center justify-content-center">
+            <span id="result2">0</span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Percentage Calculator 3 -->
+      <div class="col-md-4">
+        <form class="form-horizontal" action="javascript:void(0);">
+          <h2>Percentage Increase</h2>
+          <br /><br />
+          <div class="form-group">
+            <label for="value3_1">What is percent change from</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="value3_1"
+                   placeholder="Value"
+                   onchange="calculateRelativePercentage()">
+            <br /><br />
+            <label for="percentage3_2">to</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="value3_2"
+                   placeholder="Value"
+                   onchange="calculateRelativePercentage()">
+          </div>
+          <br /><br />
+          <div class="uv-result jumbotron d-flex align-items-center justify-content-center">
+            <span id="result3">0</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    var config = {
+      countryCode: 'IN',
+      langCode: 'en',
+      decimalPlaces: 5
+    };
+
+    function getNumberFormat(num, decimalPlaces, countryCode, langCode) {
+      var languageCode = langCode ? langCode : config.langCode;
+      var localeStr = countryCode ? (languageCode + '-' + countryCode) : (languageCode + '-' + config.countryCode);
+      return num.toLocaleString(localeStr , {
+        maximumFractionDigits: decimalPlaces ? decimalPlaces : config.decimalPlaces
+      });
+    }
+
+    function calculateSimplePercentage() {
+      var percentage1 = document.getElementById('percentage1_1').value;
+      var value1 = document.getElementById('value1_2').value;
+      var result = (percentage1 / value1) * 100;
+
+      result = value1 * (percentage1 / 100) ;
+
+      result = getNumberFormat(result);
+
+      if(!isNaN(result) && isFinite(result)) {
+        document.getElementById('result1').innerHTML = result;
+      }
+    }
+
+    function calculateReversePercentage() {
+      var value1 = document.getElementById('value2_1').value;
+      var value2 = document.getElementById('value2_2').value;
+      var result = (value1 / value2) * 100;
+
+      result = getNumberFormat(result);
+
+      if(!isNaN(result) && isFinite(result)) {
+        document.getElementById('result2').innerHTML = result;
+      }
+    }
+
+    function calculateRelativePercentage() {
+      var value1 = Number(document.getElementById('value3_1').value);
+      var value2 = Number(document.getElementById('value3_2').value);
+
+      var result = (((value1 + value2) - value1)  / value1) * 100 - 100;
+
+      var formatedResult = getNumberFormat(result);
+
+      if(value1 && value2 && !isNaN(result) && isFinite(result)) {
+        document.getElementById('result3').innerHTML = formatedResult;
+      }
+    }
+
+  </script>
+</body>
+</html>
