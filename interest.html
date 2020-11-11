@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>UV Interest Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery-3.5.1.slim.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+
+  <style>
+    .medium-font {
+      font-family: 'IBM Plex Serif', serif;
+    }
+    body {
+      background-color: lavender;
+    }
+    .uv-container {
+      margin-top: 1em;
+    }
+    .uv-result {
+      background-color: darkgray;
+      min-height: 50px;
+    }
+    .uv-vertical-center {
+      padding: 1rem 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container uv-container medium-font">
+    <div class="row">
+
+      <div class="col-md-1"></div>
+
+      <!-- Simple Interest Calculator -->
+      <div class="col-md-4">
+        <form class="form-horizontal" action="javascript:void(0);">
+
+          <h2>Simple Interest</h2>
+          <br /><br />
+
+          <div class="form-group row">
+            <label for="amount1_1" class="col-sm-4 col-form-label">Principal Amount</label>
+            <div class="col-sm-8">
+              <input type="number"
+                   class="form-control form-control-lg"
+                   id="amount1_1"
+                   value="5000"
+                   onchange="calculateSimpleInterest()">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="amount1_2" class="col-sm-4 col-form-label">Rate of Interest (%)</label>
+            <div class="col-sm-8">
+              <input type="number"
+                   class="form-control form-control-lg"
+                   id="amount1_2"
+                   value="10"
+                   onchange="calculateSimpleInterest()">
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="amount1_3" class="col-sm-4 col-form-label">Time Period (Years) </label>
+            <div class="col-sm-8">
+              <input type="number"
+                   class="form-control form-control-lg"
+                   id="amount1_3"
+                   value="5"
+                   onchange="calculateSimpleInterest()">
+            </div>
+          </div>
+
+          <div class="form-group row uv-result">
+            <label class="col-sm-4 col-form-label"><h4>Total Interest</h4></label>
+            <label class="col-sm-8 uv-vertical-center">
+              <h4><span id="total_interest1">50000</span></h4>
+            </label>
+            <label class="col-sm-4 col-form-label"><h4>Total Value</h4></label>
+            <label class="col-sm-8 uv-vertical-center">
+              <h4><span id="total_value1">70000</span></h4>
+            </label>
+          </div>
+
+        </form>
+      </div>  <!-- End of Simple Interest Calculator -->
+
+      <div class="col-md-2"></div>
+
+      <br /><br /><br />
+
+      <!-- Compound Interest Calculator -->
+      <div class="col-md-4">
+        <form class="form-horizontal" action="javascript:void(0);">
+          <h2>Compound Interest</h2>
+          <br /><br />
+
+          <div class="form-group row">
+            <label for="amount2_1" class="col-sm-4 col-form-label">Principal Amount</label>
+            <div class="col-sm-8">
+              <input type="number"
+                   class="form-control form-control-lg"
+                   id="amount2_1"
+                   value="5000"
+                   onchange="calculateCompoundInterest()">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="amount2_2" class="col-sm-4 col-form-label">Rate of Interest (%)</label>
+            <div class="col-sm-8">
+              <input type="number"
+                   class="form-control form-control-lg"
+                   id="amount2_2"
+                   value="10"
+                   onchange="calculateCompoundInterest()">
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="amount2_3" class="col-sm-4 col-form-label">Time Period (Years) </label>
+            <div class="col-sm-8">
+              <input type="number"
+                   class="form-control form-control-lg"
+                   id="amount2_3"
+                   value="5"
+                   onchange="calculateCompoundInterest()">
+            </div>
+          </div>
+
+          <div class="form-group row uv-result">
+            <label class="col-sm-4 col-form-label"><h4>Total Interest</h4></label>
+            <label class="col-sm-8 uv-vertical-center">
+              <h4><span id="total_interest2">50000</span></h4>
+            </label>
+            <label class="col-sm-4 col-form-label"><h4>Total Value</h4></label>
+            <label class="col-sm-8 uv-vertical-center">
+              <h4><span id="total_value2">70000</span></h4>
+            </label>
+          </div>
+
+        </form>
+      </div>  <!-- End of Compound Interest Calculator -->
+
+    </div>
+  </div>
+
+  <script>
+
+    var config = {
+      countryCode: 'IN',
+      langCode: 'en',
+      decimalPlaces: 2
+    };
+
+    function getNumberFormat(num, decimalPlaces, countryCode, langCode) {
+      var languageCode = langCode ? langCode : config.langCode;
+      var localeStr = countryCode ? (languageCode + '-' + countryCode) : (languageCode + '-' + config.countryCode);
+      return num.toLocaleString(localeStr , {
+        maximumFractionDigits: decimalPlaces ? decimalPlaces : config.decimalPlaces
+      });
+    }
+
+    function calculateSimpleInterest() {
+      var principal = parseFloat(document.getElementById('amount1_1').value);
+      var interestRate = parseFloat(document.getElementById('amount1_2').value);
+      var noOfYears = parseFloat(document.getElementById('amount1_3').value);
+
+
+      var totalInterest = parseFloat((principal * interestRate * noOfYears)/100);
+      var formatedTotalInterest = getNumberFormat(totalInterest);
+
+      var totalValue = principal + totalInterest;
+      var formatedTotalValue = getNumberFormat(totalValue);
+
+      if(!isNaN(totalInterest) && isFinite(totalInterest) && !isNaN(totalValue) && isFinite(totalValue)) {
+        document.getElementById('total_interest1').innerHTML = formatedTotalInterest;
+        document.getElementById('total_value1').innerHTML = formatedTotalValue;
+      }
+    }
+
+    function calculateCompoundInterest() {
+      var principal = parseFloat(document.getElementById('amount2_1').value);
+      var interestRate = parseFloat(document.getElementById('amount2_2').value);
+      var noOfYears = parseFloat(document.getElementById('amount2_3').value);
+      var compoundFrequency = 12; // i.e. Monthly compounding
+      var powerForCompounding = compoundFrequency * noOfYears;
+      var interestRateInDecimal = interestRate / 100;
+
+      var totalInterest = parseFloat(principal * Math.pow(1 + interestRateInDecimal/compoundFrequency, powerForCompounding));
+      var formatedTotalInterest = getNumberFormat(totalInterest);
+
+      var totalValue = principal + totalInterest;
+      var formatedTotalValue = getNumberFormat(totalValue);
+
+      if(!isNaN(totalInterest) && isFinite(totalInterest) && !isNaN(totalValue) && isFinite(totalValue)) {
+        document.getElementById('total_interest2').innerHTML = formatedTotalInterest;
+        document.getElementById('total_value2').innerHTML = formatedTotalValue;
+      }
+    }
+
+    calculateSimpleInterest();
+    calculateCompoundInterest();
+
+  </script>
+</body>
+</html>

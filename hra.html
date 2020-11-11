@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>UV Inflation Calculator</title>
+  <title>UV HRA Calculator</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
@@ -41,26 +41,27 @@
 
         <form>
           <div class="form-group row">
-            <label for="currentAmount" class="col-sm-4 col-form-label">Current Amount</label>
+            <label for="basicSalary" class="col-sm-4 col-form-label">Annual Basic Salary</label>
             <div class="col-sm-8">
-              <input type="number" class="form-control" id="currentAmount" value="10000"
+              <input type="number" class="form-control" id="basicSalary" value="200000"
                 onBlur="calculateAmounts()" />
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="noOfYears" class="col-sm-4 col-form-label">No. of Years</label>
+            <label for="hra" class="col-sm-4 col-form-label">Annual HRA</label>
             <div class="col-sm-8">
-              <input type="number" class="form-control" id="noOfYears" value="15" onBlur="calculateAmounts()" />
+              <input type="number" class="form-control" id="hra" value="100000" onBlur="calculateAmounts()" />
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="inflationRate" class="col-sm-4 col-form-label">Inflation Rate</label>
+            <label for="rent" class="col-sm-4 col-form-label">Annual Rent</label>
             <div class="col-sm-8">
-              <input type="number" class="form-control" id="inflationRate" value="6" onBlur="calculateAmounts()" />
+              <input type="number" class="form-control" id="rent" value="150000" onBlur="calculateAmounts()" />
             </div>
           </div>
+
           <br /><br />
           <div class="form-group row">
             <div class="col-md-12 uv-result jumbotron d-flex align-items-center justify-content-center">
@@ -78,11 +79,12 @@
     calculateAmounts();
 
     function calculateAmounts() {
-      var amount = parseInt(document.getElementById('currentAmount').value),
-        inflationRate = parseInt(document.getElementById('inflationRate').value),
-        noOfYears = parseInt(document.getElementById('noOfYears').value);
+      var basicSalary = (document.getElementById('basicSalary').value),
+          hra = parseInt(document.getElementById('hra').value)
+          rent = parseInt(document.getElementById('rent').value);
 
-      var result = parseInt(amount * Math.pow((1 + inflationRate / 100), noOfYears));
+      var result = Math.min(hra, Math.round(0.4 * basicSalary), (rent - Math.round(0.1 * basicSalary)));
+
       document.getElementById('result').innerHTML = result.toLocaleString('en-IN');
     }
   </script>
