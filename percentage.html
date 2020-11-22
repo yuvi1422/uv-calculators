@@ -19,18 +19,31 @@
     }
     .uv-result {
       background-color: darkgray;
-      min-height: 100px;
+      min-height: 5px;
+      max-height: 5rem;
+    }
+
+    .uv-result span{
+      word-break: break-word;
+    }
+
+    .topElement {
+      margin-top: 30px;
+    }
+
+    .row h2 {
+      text-align: center;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container medium-font">
+  <div class="container medium-font topElement">
     <div class="row">
 
       <!-- Percentage Calculator 1 -->
-      <div class="col-md-4">
+      <div class="col-md-3">
         <form class="form-horizontal" action="javascript:void(0);">
           <h2>Simple Percentage</h2>
           <br /><br />
@@ -58,7 +71,7 @@
 
 
       <!-- Percentage Calculator 2 -->
-      <div class="col-md-4">
+      <div class="col-md-3">
         <form class="form-horizontal" action="javascript:void(0);">
           <h2>Reverse Percentage</h2>
           <br /><br />
@@ -86,9 +99,9 @@
       </div>  <!-- End of Percentage Calculator 2 -->
 
       <!-- Percentage Calculator 3 -->
-      <div class="col-md-4">
+      <div class="col-md-3">
         <form class="form-horizontal" action="javascript:void(0);">
-          <h2>Percentage Increase</h2>
+          <h2>Percentage Increase 1</h2>
           <br /><br />
           <div class="form-group">
             <label for="value3_1">What is percent change from</label>
@@ -112,9 +125,37 @@
         </form>
       </div>  <!-- End of Percentage Calculator 3 -->
 
+      <!-- Percentage Calculator 4 -->
+      <div class="col-md-3">
+        <form class="form-horizontal" action="javascript:void(0);">
+          <h2>Percentage Increase 2</h2>
+          <br /><br />
+          <div class="form-group">
+            <label for="value4_1">What is the amount</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="value4_1"
+                   placeholder="Value"
+                   onchange="calculatePercentageIncreasedAmount()">
+            <br /><br />
+            <label for="percentage4_1">when is increased by percent</label>
+            <input type="number"
+                   class="form-control form-control-lg"
+                   id="percentage4_1"
+                   placeholder="Percentage"
+                   onchange="calculatePercentageIncreasedAmount()">
+          </div>
+          <br /><br />
+          <div class="uv-result jumbotron d-flex align-items-center justify-content-center">
+            <h1><span id="result4">0</span></h1>
+          </div>
+        </form>
+      </div>  <!-- End of Percentage Calculator 4 -->
+
+
+
     </div>
   </div>
-
   <script>
 
     var config = {
@@ -138,10 +179,10 @@
 
       result = value1 * (percentage1 / 100) ;
 
-      result = getNumberFormat(result);
+      var formatedResult = getNumberFormat(result);
 
       if(!isNaN(result) && isFinite(result)) {
-        document.getElementById('result1').innerHTML = result;
+        document.getElementById('result1').innerHTML = formatedResult;
       }
     }
 
@@ -150,10 +191,10 @@
       var value2 = document.getElementById('value2_2').value;
       var result = (value1 / value2) * 100;
 
-      result = getNumberFormat(result);
+      var formatedResult = getNumberFormat(result);
 
       if(!isNaN(result) && isFinite(result)) {
-        document.getElementById('result2').innerHTML = result;
+        document.getElementById('result2').innerHTML = formatedResult;
       }
     }
 
@@ -167,6 +208,19 @@
 
       if(value1 && value2 && !isNaN(result) && isFinite(result)) {
         document.getElementById('result3').innerHTML = formatedResult;
+      }
+    }
+
+    function calculatePercentageIncreasedAmount() {
+      var value1 = Number(document.getElementById('value4_1').value);
+      var percentage1 = Number(document.getElementById('percentage4_1').value);
+
+      var result = value1 + (value1 * (percentage1/100));
+
+      var formatedResult = getNumberFormat(result);
+
+      if(value1 && percentage1 && !isNaN(result) && isFinite(result)) {
+        document.getElementById('result4').innerHTML = formatedResult;
       }
     }
 
